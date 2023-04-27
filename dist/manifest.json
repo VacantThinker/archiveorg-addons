@@ -1,44 +1,37 @@
 {
   "manifest_version": 2,
-  "name": "firefox-addons-only-template",
-  "description": "firefox-addons-only-template",
-  "version": "0.0.0.1",
+  "name": "archiveorg-addons",
+  "description": "save files link to file, only works on https://archive.org/download/*",
+  "version": "0.0.1.2",
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
-      "id": "firefox-addons-only-template@example.com"
+      "id": "archiveorg-addons@example.com"
     }
   },
   "icons": {
     "48": "icons/48.png"
   },
-  "browser_action": {
-    "default_icon": "icons/48.png",
-    "default_title": "firefox-addons-only-template"
-  },
   "page_action": {
     "default_icon": "icons/48.png",
-    "default_title": "firefox-addons-only-template",
+    "default_title": "archiveorg-addons",
     "show_matches": [
-      "<all_urls>"
+      "https://archive.org/download/*"
     ]
   },
   "background": {
     "page": "background.html"
   },
   "permissions": [
-    "<all_urls>",
-    "tabs",
-    "contextMenus",
-    "notifications"
+    "https://archive.org/download/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://archive.org/download/*"
       ],
       "js": [
-        "js/abc.js"
+        "js/archiveorg.js"
       ]
     }
   ]
