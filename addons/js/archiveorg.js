@@ -18,7 +18,7 @@ browser.runtime.onMessage.addListener((message) => {
   let eleTbody = document.querySelector(selectorTbody);
   let eleTr = eleTbody.querySelectorAll('tr');
 
-  let reduce = Array.from(eleTr)
+  let mapHref = Array.from(eleTr)
     .filter((value) => {
       let tdItemSize = value.querySelector('td:nth-child(3)');
       let textContentSize = tdItemSize.textContent;
@@ -28,20 +28,40 @@ browser.runtime.onMessage.addListener((message) => {
       }
     })
     .map((value) => {
-      return value.querySelector('td:nth-child(1) > a');
-    })
-    .reduce((previousValue, currentValue, currentIndex, array) => {
-      let href = currentValue['href'];
-      return String(previousValue).concat(href, '\n');
+      let elementA = value.querySelector('td:nth-child(1) > a');
+      let href = elementA['href'];
+      return String(href);
+    });
+
+  let reduceEnds = mapHref.reduce((previousValue, currentValue) => {
+    let lastIndexOf = currentValue.lastIndexOf('.');
+    let ends = currentValue.substring(lastIndexOf);
+    previousValue[ends] = ends;
+    return previousValue;
+  }, {});
+
+  let reduce = Object.keys(reduceEnds).reduce(
+    (previousValue, ends) => {
+
+      let cnt = 0;
+      let reduceItem = mapHref.reduce(
+        (previousValue, currentValue,
+         currentIndex, array) => {
+
+          if (currentValue.endsWith(ends)) { // eg: .jpg
+            cnt = cnt + 1;
+            return (cnt % 30 === 0)
+              ? previousValue.concat(currentValue, '\n\n')
+              : previousValue.concat(currentValue, '\n');
+          }
+          else {
+            return previousValue;
+          }
+        }, ``);
+
+      return previousValue.concat(reduceItem, '\n\n\n\n');
     }, ``);
 
   saveTextToFile(reduce, filename);
-
-  // let endsMP4 = '.mp4';
-  // let endsAVI = '.avi';
-  // const arrFilter = [
-  //   // endsMP4,
-  //   endsAVI,
-  // ];
 
 });

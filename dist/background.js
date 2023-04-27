@@ -1,1 +1,1 @@
-console.log("new Date=",new Date),browser.pageAction.onClicked.addListener((async e=>{let a=e.url.lastIndexOf("/"),n=["archive.org","download",e.url.substring(a+1),".txt"].reduce(((e,a,n,t)=>0===n||n===t.length-1?e.concat(a):e.concat("-",a)),""),t=e.id;await browser.tabs.sendMessage(t,{filename:n})}));
+console.log("new Date=",new Date),browser.pageAction.onClicked.addListener((async e=>{let a={filename:e.url.replace("https://","").concat(".txt")};await async function(e,a){let t=e.id;await browser.tabs.sendMessage(t,a)}(e,a)}));
