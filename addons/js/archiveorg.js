@@ -11,7 +11,7 @@ function saveTextToFile(text, filename) {
 }
 
 browser.runtime.onMessage.addListener((message) => {
-  console.log(`meslog message=\n`, message);
+  // console.log(`meslog message=\n`, message);
   let {filename} = message;
 
   let selectorTbody = '.directory-listing-table > tbody:nth-child(2)';

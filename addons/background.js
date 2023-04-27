@@ -1,4 +1,4 @@
-console.log('new Date=', new Date());
+// console.log('new Date=', new Date());
 
 async function sendMessageToTab(tab, message) {
   let tabId = tab.id;
